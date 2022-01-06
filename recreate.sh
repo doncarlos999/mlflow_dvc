@@ -15,9 +15,21 @@ git commit -m "configured remote storage"
 mkdir data
 wget https://github.com/mlflow/mlflow/raw/master/examples/sklearn_elasticnet_wine/wine-quality.csv -P data
 mkdir src
-wget https://github.com/mlflow/mlflow/raw/master/examples/sklearn_elasticnet_wine/train.py -P data
+wget https://github.com/doncarlos999/mlflow_dvc/raw/8f8fcc0c124f263b2a54ccf700bdff8d3229ba91/src/train.py -P src
 dvc add data/wine-quality.csv
 git add .
 git commit -m 'data: track'
 git tag -a 'v1' -m 'raw data'
 dvc push
+sed -i.bu '2,1001d' data/wine-quality.csv
+rm -f wine-quality.csv.bu
+dvc add data/wine-quality.csv
+git add .
+git commit -m "data: remove 1000 lines"
+git tag -a 'v2' -m 'removed 1000 lines'
+dvc push
+python3 src/train.py
+sed -i.bu 's/v1/v2/' src/train.py
+rm -f train.py.bu
+python3 src/train.py
+mlflow ui

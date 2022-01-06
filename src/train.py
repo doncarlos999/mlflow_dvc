@@ -26,7 +26,7 @@ from pathlib import Path
 home = str(Path.home())
 path='data/wine-quality.csv'
 repo=f'{home}/mlflow_dvc'
-version='v1'
+version='v2'
 
 np_seed=40
 
