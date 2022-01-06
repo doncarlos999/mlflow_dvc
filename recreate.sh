@@ -22,7 +22,7 @@ git commit -m 'data: track'
 git tag -a 'v1' -m 'raw data'
 dvc push
 sed -i.bu '2,1001d' data/wine-quality.csv
-rm -f wine-quality.csv.bu
+rm -f data/wine-quality.csv.bu
 dvc add data/wine-quality.csv
 git add .
 git commit -m "data: remove 1000 lines"
@@ -30,6 +30,6 @@ git tag -a 'v2' -m 'removed 1000 lines'
 dvc push
 python3 src/train.py
 sed -i.bu 's/v1/v2/' src/train.py
-rm -f train.py.bu
+rm -f src/train.py.bu
 python3 src/train.py
 mlflow ui
